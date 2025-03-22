@@ -14,11 +14,10 @@ const Button = ({ type, onClick, children, color, className }: propsType) => {
       type={type} 
       style={{ 
         backgroundColor: color,
-        padding : '8px 16px',
         cursor:'pointer',
         borderRadius:'8px'
       }} 
-      className={`${className} hover:shadow-xl duration-200`}>
+      className={`${className}`}>
         {children}
       </button>
     </>
