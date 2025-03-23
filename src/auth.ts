@@ -9,6 +9,7 @@ import Google from "next-auth/providers/google";
 declare module "next-auth" {
   interface User {
     username: string;
+    role: string;
   }
 }
 
@@ -29,7 +30,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         const client = await clientPromise;
         const db = client.db("admin-panel");
         const user = await db.collection("users").findOne({ username: username });
-
         if (!user) {
           throw new Error("user not-define!");
         }
@@ -43,6 +43,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           username: user.username,
           password: user.password,
           email: user.email,
+          role: user.role,
         };
         return validUser;
       },
@@ -61,21 +62,26 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       const cheackUser = await db.collection("users").findOne({
         $or: [{ username: user.name }, { email: user.email }],
       });
+      console.log(cheackUser);
       if (cheackUser) {
         return true;
       }
       await db.collection("users").insertOne({
         id: user.id,
+        role: user.role || "user",
         email: user.email,
-        username: user.name,
+        username: user.username || user.name,
       });
+      
+      user.role = 'user'
 
       return true;
     },
     async jwt({ token, user }) {
       if (user) {
         token.email = user.email;
-        token.username = user.username;
+        token.username = user.username || user.name;
+        token.role = user.role;
       }
       return token;
     },
@@ -83,8 +89,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (token) {
         session.user.username = token.username as string;
         session.user.email = token.email as string;
+        session.user.role = token.role as string;
       }
       return session;
     },
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });

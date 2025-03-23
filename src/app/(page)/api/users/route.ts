@@ -15,7 +15,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const { username, password, email } = await req.json();
+  const {role, username, password, email } = await req.json();
   const client = await clientPromise;
   const db = client.db("admin-panel");
   const user = await db.collection("users").findOne(
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  await db.collection("users").insertOne({ id:new ObjectId(), email, username, password: hashPassword });
+  await db.collection("users").insertOne({ id:new ObjectId(), role , email, username, password: hashPassword });
 
   return NextResponse.json({ok:true, status: 200, message: "کاربر ساخته شد" });
 }
