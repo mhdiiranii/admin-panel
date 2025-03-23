@@ -17,7 +17,7 @@ const Button = ({ type, onClick, children, color, className }: propsType) => {
         cursor:'pointer',
         borderRadius:'8px'
       }} 
-      className={`${className} px-4 py-2`}>
+      className={`${className}`}>
         {children}
       </button>
     </>

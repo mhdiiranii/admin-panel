@@ -5,6 +5,7 @@ import Button from "../button/Button";
 import { useEffect, useState } from "react";
 import { ChangeLg } from "@/services/language";
 import Box from "../toggle-box/toggleBox";
+import Image from "next/image";
 
 const items = [
   { id: 1, title: "Home", href: "/" },
@@ -16,8 +17,9 @@ const items = [
 ];
 
 const Header = () => {
-  const [lg, setLg] = useState<string>("");
+  const [lg, setLg] = useState<string>("en");
   const [toggle, setToggle] = useState<boolean>(false);
+  const [nameLg ,setNameLg] = useState <string> ('En')
 
   useEffect(() => {
     ChangeLg(lg);
@@ -26,6 +28,16 @@ const Header = () => {
   const handleToggle = () => {
     setToggle(() => (toggle ? false : true));
   };
+
+
+  const setFarsi = ()=>{
+    setLg("fa")
+    setNameLg('Fa')
+  }
+  const setEnglish = ()=>{
+    setLg("en")
+    setNameLg('En')
+  }
 
   return (
     <div className="shadow-[0_0px_20px_1px_rgba(0,0,0,0.2)] flex justify-between items-center ">
@@ -38,14 +50,15 @@ const Header = () => {
       </div>  
 
       <div className="flex gap-4 relative">
-        <Button onClick={handleToggle} type="button" className="hover:bg-amber-100 px-8 py-4 duration-300 text-sm font-bold">
-          Lg
+        <Button onClick={handleToggle} type="button" className="hover:bg-amber-100 px-8 py-4 duration-300 text-sm font-bold flex gap-1">
+          {nameLg}
+          <Image width={20} height={20} alt="flag" src={`/flag/${lg}.svg`}/>
         </Button>
-        <Box onToggle={handleToggle} toggle={toggle} possition="bottom-left" clasName="text-xs font-bold flex flex-col items-start">
-          <Button className="w-full  hover:bg-amber-100 duration-200" type="button" onClick={() => setLg("fa")}>
+        <Box onToggle={handleToggle} toggle={toggle} possition="bottom-left" clasName="text-xs  font-bold flex flex-col items-start ">
+          <Button  className="w-full text-start px-4 py-2 hover:bg-amber-100 duration-200" type="button" onClick={setFarsi}>
             farsi
           </Button>
-          <Button className="w-full hover:bg-amber-100 duration-200" type="button" onClick={() => setLg("en")}>
+          <Button className="w-full  text-start px-4 py-2 hover:bg-amber-100 duration-200" type="button" onClick={setEnglish}>
             english
           </Button>
         </Box>
