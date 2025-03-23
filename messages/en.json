@@ -1,5 +1,19 @@
 {
-    "HomePage": {
-      "title": "Welcome to my new project."
-    }
+  "HomePage": {
+    "h1": "Welcome to my new project.",
+    "top-p-1": "I hope you like it.",
+    "top-p-2": "This project has several sections on authorization, authentication, admin panel, protected routes, token acquisition, session creation.... where you can both view and create content.",
+    "listItems": [
+      "You can register and login both via Google and email",
+      "This project uses Mongo for the database which is connected to localhost:27017",
+      "You can only access the admin panel with a confirmed email",
+      "The project also uses api route for the backend of the project",
+      "Next auth is used for authentication"
+    ],
+    "technology":"Technology",
+    "skills":[
+      "html","css","js","next js","react","reusabel component","next-auth","authorization","authentication",
+      "ssr","ssg","axios","tailwind","bcryptjs","mongodb","zod","next-intl","seo","optimization"
+    ]
   }
+}
