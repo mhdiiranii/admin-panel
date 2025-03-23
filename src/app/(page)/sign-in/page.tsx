@@ -33,8 +33,7 @@ const SignIn = () => {
     }
   };
   const googleSign = async () => {
-    const user = await signIn("google", { callbackUrl: "/" });
-    console.log(user);
+     await signIn("google", { callbackUrl: "/" });
   };
   return (
     <div className="w-full h-screen flex justify-center items-center">

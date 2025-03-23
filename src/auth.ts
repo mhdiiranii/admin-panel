@@ -66,6 +66,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
       await db.collection("users").insertOne({
         id: user.id,
+        role:'user',
         email: user.email,
         username: user.name,
       });

@@ -10,6 +10,7 @@ export const signInSchema = object({
 })
 export const signUpSchema = object({
   id:string().optional(),
+  role:string(),
   username: string()
     .min(3,"نام باید بیشتر از 3 کاراکتر باشد")  
   ,
