@@ -9,6 +9,7 @@ import Image from "next/image";
 import { HiLogin } from "react-icons/hi";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const items = [
   { id: 1, title: "Home", href: "/", type: "public" },
@@ -26,7 +27,7 @@ const HeaderDesign = ({ session }: propsType) => {
   const [toggle, setToggle] = useState<boolean>(false);
   const [nameLg, setNameLg] = useState<string>("En");
   const [side, setSide] = useState<boolean>(false);
-
+  const router = useRouter()
 
   useEffect(() => {
     ChangeLg(lg);
@@ -50,6 +51,7 @@ const HeaderDesign = ({ session }: propsType) => {
   const signOutUser = async ()=>{
     await signOut();
     openSide()
+    router.push('/sign-in')
   }
 
   return (
