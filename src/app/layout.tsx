@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import { getLocale } from "next-intl/server";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,11 +19,15 @@ export default async function RootLayout({
   const dir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} >
-      <body className={`antialiased flex flex-col justify-between`}>
-        <Header />
-        <main className="mx-auto container" dir={dir}>{children}</main>
-        <Footer />
+    <html lang={locale}>
+      <body className={`antialiased flex flex-col justify-between h-screen`}>
+        <SessionProvider>
+          <Header />
+          <main className="h-fit py-4 mx-auto container" dir={dir}>
+            {children}
+          </main>
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   );

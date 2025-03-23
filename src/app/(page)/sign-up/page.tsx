@@ -38,8 +38,10 @@ const SignUp = () => {
   };
 
   const googleSign = async () => {
-    const user = await signIn("google", { callbackUrl: "/" });
-    console.log(user);
+    const res = await signIn("google", { callbackUrl: "/" });
+    if (!res?.error) {
+      router.refresh()
+    }
   };
   return (
     <div className="w-full h-screen flex justify-center items-center">

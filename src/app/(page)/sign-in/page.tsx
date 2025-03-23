@@ -29,12 +29,17 @@ const SignIn = () => {
     const res = await newUser;
     if (!res?.error) {
       router.push("/");
+      router.refresh()
     } else {
       setErrorUser(res?.error);
     }
   };
   const googleSign = async () => {
-     await signIn("google", { callbackUrl: "/" });
+    const res = await signIn("google", { callbackUrl: "/" });
+    if (!res?.error) {
+      router.refresh()
+    }
+     
   };
   return (
     <div className="w-full h-screen flex justify-center items-center">
