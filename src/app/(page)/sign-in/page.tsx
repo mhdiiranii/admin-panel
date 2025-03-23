@@ -2,7 +2,7 @@
 
 import Button from "@/app/components/button/Button";
 import InputSign from "@/app/components/input/signInput";
-import { SignInSchemaType, signUpSchema } from "@/lib/zod";
+import { signInSchema, SignInSchemaType } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -17,10 +17,11 @@ const SignIn = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(signInSchema),
   });
   const router = useRouter();
   const onSubmit: SubmitHandler<SignInSchemaType> = async (data) => {
+    console.log(data)
     const newUser = signIn("credentials", {
       redirect: false,
       ...data,
@@ -42,10 +43,10 @@ const SignIn = () => {
         <InputSign register={register} names="password" type="password" placeholder="password" errors={errors} />
 
         <div className="w-full flex flex-col gap-4">
-          <Button type="submit" className="bg-green-400 text-white font-bold">
+          <Button type="submit" className="bg-green-400 p-2 text-white font-bold">
             Sign In
           </Button>
-          <Button onClick={googleSign} type="button" className="bg-green-400 text-white font-bold">
+          <Button onClick={googleSign} type="button" className="bg-green-400 p-2 text-white font-bold">
             Google
           </Button>
           <Link href={"/sign-up"} className="bg-gray-500 p-2 text-center rounded-lg text-white font-bold hover:shadow-xl duration-200 cursor-pointer">

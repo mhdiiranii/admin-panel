@@ -68,7 +68,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         id: user.id,
         role:'user',
         email: user.email,
-        username: user.name,
+        username: user.username || user.name,
       });
 
       return true;
@@ -76,7 +76,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.email = user.email;
-        token.username = user.username;
+        token.username = user.username || user.name
       }
       return token;
     },
@@ -88,4 +88,5 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       return session;
     },
   },
+  secret:process.env.NEXTAUTH_SECRET,
 });

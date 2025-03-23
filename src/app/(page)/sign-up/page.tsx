@@ -48,10 +48,10 @@ const SignUp = () => {
         <InputSign register={register} names="username" placeholder="username" errors={errors} />
         <InputSign register={register} names="password" type="password" placeholder="Email" errors={errors} />
         <div className="w-full flex flex-col gap-4">
-          <Button type="submit" className="bg-green-400 text-white font-bold">
+          <Button type="submit" className="bg-green-400 p-2 text-white font-bold">
             Sign Up
           </Button>
-          <Button type="button" onClick={googleSign} className="bg-green-400 text-white font-bold">
+          <Button type="button" onClick={googleSign} className="bg-green-400 p-2 text-white font-bold">
             Google
           </Button>
           {errorUser !== "" && <span className="text-xs text-right text-red-500">{errorUser}</span>}
