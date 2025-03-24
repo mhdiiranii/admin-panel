@@ -6,6 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "use-intl";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const RoutesTop = [
   {
@@ -72,32 +73,35 @@ const SideBarPanel = () => {
   };
 
   return (
-    <div className={`${!sideToggle ? "translate-x-0 w-1/4" : "-translate-x-[59%] w-14"} duration-300 ease-in flex items-center h-screen`}>
-      <div className={`w-full flex flex-col gap-8 justify-between overflow-hidden h-full ease-in border rounded-r-2xl shadow-[0_0_15px_1px_rgba(0,0,0,0.5)] p-2`}>
-        <div className="flex flex-col gap-10 items-start overflow-hidden ">
-          <div>
-            <h3>Generator</h3>
-            <h4>{session?.user?.username}</h4>
-            <p>{session?.user?.email}</p>
+    <div className={`${!sideToggle ? "translate-x-0 w-2/6" : "-translate-x-[68%] w-16"} duration-300 ease-in flex items-center h-screen`}>
+      <div className={`w-full flex flex-col gap-8 justify-between overflow-hidden h-full ease-in border rounded-r-2xl shadow-[0_0_15px_1px_rgba(0,0,0,0.5)]`}>
+        <div className="flex flex-col gap-4 items-start overflow-hidden ">
+          <div className="flex flex-col items-start border-b rounded-lg w-full py-2 px-4 bg-amber-100">
+            <div className="flex justify-between items-center gap-2">
+              <Image width={70} height={70} alt="person" className="rounded-full" src={"/svg/person.svg"} />
+              <h3 className="text-lg font-bold">Generator</h3>
+            </div>
+            <h4 className="text-lg font-bold">{session?.user?.username}</h4>
+            <p className="text-sm font-light">{session?.user?.email}</p>
           </div>
-          <div className="flex flex-col ">
+          <div className="flex flex-col items-start w-full">
             {RoutesTop.map((item) => (
-              <Link key={item.id} href={item.href}>
+              <Link className="w-full px-4 py-2.5 hover:bg-amber-50 duration-200" key={item.id} href={item.href}>
                 {t(item.title)}
               </Link>
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-2 overflow-hidden">
+        <div className="grid grid-cols-2 gap-1 overflow-hidden border-t rounded-lg bg-amber-100 py-2 px-4">
           {RoutesBottom.map((item) => (
-            <Link key={item.id} href={item.href}>
+            <Link className="py-2 text-center rounded-lg hover:bg-amber-50 duration-200" key={item.id} href={item.href}>
               {t(item.title)}
             </Link>
           ))}
         </div>
       </div>
-      <Button type="button" onClick={handleSide} className="h-14 w-5  flex items-center text-amber-100 bg-black rounded-r-full">
-        <IoMdArrowDropright className={`${sideToggle ? "rotate-180" : "rotate-0"}`} />
+      <Button type="button" onClick={handleSide} className="h-20 w-8  flex items-center text-amber-100 bg-black rounded-r-full">
+        <IoMdArrowDropright className={`${!sideToggle ? "rotate-180" : "rotate-0"}`} />
       </Button>
     </div>
   );
