@@ -24,9 +24,9 @@ export default async function PanelLayout({
   }
 
   return (
-    <div className="flex gap-10">
+    <div className="flex items-end justify-end  gap-10">
       <SideBarPanel />
-      <main dir={dir} className="mx-auto  container w-full py-4">
+      <main dir={dir} className="flex container ml-auto w-5/7  py-4">
         {children}
       </main>
     </div>

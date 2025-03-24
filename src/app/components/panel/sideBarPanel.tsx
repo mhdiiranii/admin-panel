@@ -1,14 +1,11 @@
 "use client";
 
-import { IoMdArrowDropright } from "react-icons/io";
-import Button from "../button/Button";
-import { useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "use-intl";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
-const RoutesTop = [
+const FeaturePanel = [
   {
     id: 1,
     title: "dashboard",
@@ -64,16 +61,13 @@ const RoutesBottom = [
 ];
 
 const SideBarPanel = () => {
-  const [sideToggle, setSideToggle] = useState<boolean>(false);
   const t = useTranslations("adminDashboard");
   const { data: session } = useSession();
 
-  const handleSide = () => {
-    setSideToggle(() => (sideToggle ? false : true));
-  };
+  
 
   return (
-    <div className={`${!sideToggle ? "translate-x-0 w-2/6" : "-translate-x-[68%] w-16"} duration-300 ease-in flex items-center h-screen`}>
+    <div className={` flex items-center w-1/4 fixed left-0 top-0 bottom-0`}>
       <div className={`w-full flex flex-col gap-8 justify-between overflow-hidden h-full ease-in border rounded-r-2xl shadow-[0_0_15px_1px_rgba(0,0,0,0.5)]`}>
         <div className="flex flex-col gap-4 items-start overflow-hidden ">
           <div className="flex flex-col items-start border-b rounded-lg w-full py-2 px-4 bg-amber-100">
@@ -85,7 +79,7 @@ const SideBarPanel = () => {
             <p className="text-sm font-light">{session?.user?.email}</p>
           </div>
           <div className="flex flex-col items-start w-full">
-            {RoutesTop.map((item) => (
+            {FeaturePanel.map((item) => (
               <Link className="w-full px-4 py-2.5 hover:bg-amber-50 duration-200" key={item.id} href={item.href}>
                 {t(item.title)}
               </Link>
@@ -100,9 +94,6 @@ const SideBarPanel = () => {
           ))}
         </div>
       </div>
-      <Button type="button" onClick={handleSide} className="h-20 w-8  flex items-center text-amber-100 bg-black rounded-r-full">
-        <IoMdArrowDropright className={`${!sideToggle ? "rotate-180" : "rotate-0"}`} />
-      </Button>
     </div>
   );
 };
