@@ -14,10 +14,11 @@ import { useRouter } from "next/navigation";
 const items = [
   { id: 1, title: "Home", href: "/", type: "public" },
   { id: 2, title: "About", href: "/about", type: "public" },
-  { id: 3, title: "Contact us", href: "/constat-us", type: "public" },
-  { id: 4, title: "Products", href: "/products", type: "user" },
-  { id: 5, title: "Profile", href: "/profile", type: "user" },
-  { id: 6, title: "Panel", href: "/panel", type: "admin" },
+  { id: 3, title: "Contact us", href: "/contact-us", type: "public" },
+  { id: 4, title: "Blogs", href: "/blogs", type: "public" },
+  { id: 5, title: "Products", href: "/products", type: "user" },
+  { id: 6, title: "Profile", href: "/profile", type: "user" },
+  { id: 7, title: "Panel", href: "/panel", type: "admin" },
 ];
 interface propsType {
   session: Session | null;

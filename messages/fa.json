@@ -23,5 +23,15 @@
     "signIn":"وارد شوید",
     "signUp":"ثبت نام",
     "google":"گوگل"
+  },
+  "adminDashboard":{
+    "dashboard":"داشبورد",
+    "blog":"بلاگ",
+    "users":"کاربران",
+    "products":"محصولات",
+    "home":"خانه",
+    "about":"درباره ما",
+    "contact":"تماس با ما",
+    "profile":"پروفایل"
   }
 }

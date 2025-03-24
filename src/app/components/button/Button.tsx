@@ -15,9 +15,8 @@ const Button = ({ type, onClick, children, color, className }: propsType) => {
       style={{ 
         backgroundColor: color,
         cursor:'pointer',
-        borderRadius:'8px'
       }} 
-      className={`${className}`}>
+      className={`${className} rounded-lg`}>
         {children}
       </button>
     </>
