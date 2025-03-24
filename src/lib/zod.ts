@@ -1,7 +1,7 @@
 import { object, string, z } from "zod"
  
 export const signInSchema = object({
-  username: string().min(3,"نام باید بیشتر از 3 کاراکتر باشد"),
+  email : string().email("ایمیل معتبر نیست").optional(),
   password: string()
     .min(8,'رمز عبور باید حداقل 8 کاراکتر باشد')
     .max(14 , 'رمز عبور باید حداکثر 14 باشد')

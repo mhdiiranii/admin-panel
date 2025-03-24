@@ -5,6 +5,7 @@ import InputSign from "@/app/components/input/signInput";
 import { signInSchema, SignInSchemaType } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {  useState } from "react";
@@ -20,6 +21,7 @@ const SignIn = () => {
     resolver: zodResolver(signInSchema),
   });
   const router = useRouter();
+  const t = useTranslations("loged");
   const onSubmit: SubmitHandler<SignInSchemaType> = async (data) => {
     console.log(data)
     const newUser = signIn("credentials", {
@@ -44,18 +46,18 @@ const SignIn = () => {
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 px-10 py-8 border rounded-lg ">
-        <InputSign register={register} names="username" placeholder="username" errors={errors} />
-        <InputSign register={register} names="password" type="password" placeholder="password" errors={errors} />
+        <InputSign register={register} names="email" placeholder={t('email')} errors={errors} />
+        <InputSign register={register} names="password" type="password" placeholder={t('password')} errors={errors} />
 
         <div className="w-full flex flex-col gap-4">
           <Button type="submit" className="bg-green-400 p-2 text-white font-bold">
-            Sign In
+          {t('signIn')}
           </Button>
           <Button onClick={googleSign} type="button" className="bg-green-400 p-2 text-white font-bold">
-            Google
+          {t('google')}
           </Button>
           <Link href={"/sign-up"} className="bg-gray-500 p-2 text-center rounded-lg text-white font-bold hover:shadow-xl duration-200 cursor-pointer">
-            Email
+          {t('email')}
           </Link>
           {errorUser !== "" && <span className="text-xs text-right text-red-500">{errorUser}</span>}
         </div>

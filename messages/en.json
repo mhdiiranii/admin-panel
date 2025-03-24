@@ -15,5 +15,13 @@
       "html","css","js","next js","react","reusabel component","next-auth","authorization","authentication",
       "ssr","ssg","axios","tailwind","bcryptjs","mongodb","zod","next-intl","seo","optimization"
     ]
+  },
+  "loged":{
+    "email":"Email",
+    "username":"Username",
+    "password":"Password",
+    "signIn":"Sign In",
+    "signUp":"Sign Up",
+    "google":"Google"
   }
 }

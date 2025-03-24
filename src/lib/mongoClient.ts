@@ -1,25 +1,26 @@
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 
-const MONGO_URI = process.env.MONGO_URI as string;
+const MONGO_URL = process.env.MONGO_URI;
 
-if (!MONGO_URI) {
-  throw new Error("Please define the MONGO_URI environment variable");
-}
+if (!MONGO_URL) throw new Error("is not define mongo url");
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
+let isConnected = false;
 
-declare global {
-  // eslint-disable-next-line no-var
-  var _mongoClientPromise: Promise<MongoClient>;
-}
+export const connectDb = async () => {
+  if (isConnected) {
+    console.log("✅ Already connected to MongoDB");
+    return;
+  }
 
-if (!global._mongoClientPromise) {
-  client = new MongoClient(MONGO_URI);
-  global._mongoClientPromise = client.connect();
-}
-
-// eslint-disable-next-line prefer-const
-clientPromise = global._mongoClientPromise;
-
-export default clientPromise;
+  try {
+    const { connection } = await mongoose.connect(MONGO_URL,{
+      dbName:"admin-panel",
+      bufferCommands:false
+    });
+    isConnected = connection.readyState === 1;
+    console.log('🚀 Connected to MongoDB')
+  } catch (error) {
+    console.error("❌ Error connecting to MongoDB:", error);
+    process.exit();
+  }
+};
