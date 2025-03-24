@@ -4,6 +4,7 @@ import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import { getLocale } from "next-intl/server";
 import { SessionProvider } from "next-auth/react";
+import { NextIntlClientProvider } from "next-intl";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,9 +24,11 @@ export default async function RootLayout({
       <body className={`antialiased flex flex-col justify-between h-screen`}>
         <SessionProvider>
           <Header />
-          <main className="h-fit py-4 mx-auto container" dir={dir}>
-            {children}
-          </main>
+          <NextIntlClientProvider>
+            <main className="h-fit py-4 mx-auto container" dir={dir}>
+              {children}
+            </main>
+          </NextIntlClientProvider>
           <Footer />
         </SessionProvider>
       </body>

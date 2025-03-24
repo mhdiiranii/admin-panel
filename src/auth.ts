@@ -1,10 +1,11 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import clientPromise from "./lib/mongoClient";
+import  { connectDb } from "./lib/mongoClient";
 import bcrypt from "bcryptjs";
 import { signInSchema } from "./lib/zod";
 import { UserType } from "./models/types";
 import Google from "next-auth/providers/google";
+import User from "./models/userSchema";
 
 declare module "next-auth" {
   interface User {
@@ -26,10 +27,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         password: {},
       },
       authorize: async (credentials) => {
-        const { username, password } = await signInSchema.parseAsync(credentials);
-        const client = await clientPromise;
-        const db = client.db("admin-panel");
-        const user = await db.collection("users").findOne({ username: username });
+        const { email, password } = await signInSchema.parseAsync(credentials);
+        await connectDb();
+        const user = await User.findOne({ email: email });
         if (!user) {
           throw new Error("user not-define!");
         }
@@ -57,16 +57,14 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (!user) {
         return false;
       }
-      const client = await clientPromise;
-      const db = client.db("admin-panel");
-      const cheackUser = await db.collection("users").findOne({
-        $or: [{ username: user.name }, { email: user.email }],
+      await connectDb();
+      const cheackUser = await User.findOne({
+        $or:[{ email: user.email }],
       });
-      console.log(cheackUser);
       if (cheackUser) {
         return true;
       }
-      await db.collection("users").insertOne({
+      await User.insertOne({
         id: user.id,
         role: user.role || "user",
         email: user.email,
