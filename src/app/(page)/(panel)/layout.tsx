@@ -18,7 +18,6 @@ export default async function PanelLayout({
   const locale = await getLocale();
   const dir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
   const session = await auth();
-  console.log(session?.user?.role);
   if (session?.user?.role !== "admin") {
     notFound();
   }
@@ -26,7 +25,7 @@ export default async function PanelLayout({
   return (
     <div className="flex items-end justify-end  gap-10">
       <SideBarPanel />
-      <main dir={dir} className="flex container ml-auto w-5/7  py-4">
+      <main dir={dir} className="flex container ml-auto pr-14 w-5/7  py-4">
         {children}
       </main>
     </div>
