@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import  { connectDb } from "./lib/mongoClient";
 import bcrypt from "bcryptjs";
 import { signInSchema } from "./lib/zod";
-import { UserType } from "./models/types";
+import { blogType, UserType } from "./models/types";
 import Google from "next-auth/providers/google";
 import User from "./models/userSchema";
 
@@ -11,7 +11,8 @@ declare module "next-auth" {
   interface User {
     username: string;
     role: string | undefined;
-    image?:string | null | undefined
+    image?:string | null | undefined,
+    blogs:blogType
   }
 }
 
@@ -41,11 +42,13 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         }
 
         const validUser: UserType = {
+          id:user.id,
           username: user.username,
           password: user.password,
           email: user.email,
           role: user.role,
-          image:user.image
+          image:user.image,
+          blogs:user.blogs
         };
         return validUser;
       },
@@ -71,7 +74,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         role: "user",
         email: user.email,
         username: user.username || user.name,
-        image : user.image
+        image : user.image,
+        blogs: user.blogs
       });
       
       user.role = 'user'
@@ -88,6 +92,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         await connectDb();
         const dbUser = await User.findOne({ email: token.email });
         token.role = dbUser?.role || "user"; 
+        token.blogs = dbUser?.blogs;
       }
       return token;
     },
@@ -97,6 +102,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         session.user.email = token.email as string;
         session.user.role = token.role as string || 'user';
         session.user.image = token.image as string;
+        session.user.blogs = token.blogs as blogType
       }
       return session;
     },
