@@ -15,7 +15,6 @@ export const connectDb = async () => {
   try {
     const { connection } = await mongoose.connect(MONGO_URL,{
       dbName:"admin-panel",
-      bufferCommands:false
     });
     isConnected = connection.readyState === 1;
     console.log('🚀 Connected to MongoDB')

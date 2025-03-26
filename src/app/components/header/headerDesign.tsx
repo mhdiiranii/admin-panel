@@ -25,19 +25,15 @@ interface propsType {
 }
 const HeaderDesign = ({ session }: propsType) => {
   const [lg, setLg] = useState<string>("en");
-  const [toggle, setToggle] = useState<boolean>(false);
   const [nameLg, setNameLg] = useState<string>("En");
   const [side, setSide] = useState<boolean>(false);
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     ChangeLg(lg);
   }, [lg]);
-  
-  const handleToggle = () => {
-    setToggle(() => (toggle ? false : true));
-  };
 
+ 
   const setFarsi = () => {
     setLg("fa");
     setNameLg("Fa");
@@ -49,11 +45,11 @@ const HeaderDesign = ({ session }: propsType) => {
   const openSide = () => {
     setSide(() => (side ? false : true));
   };
-  const signOutUser = async ()=>{
+  const signOutUser = async () => {
     await signOut();
-    openSide()
-    router.push('/sign-in')
-  }
+    openSide();
+    router.push("/sign-in");
+  };
 
   return (
     <div className="shadow-[0_0px_20px_1px_rgba(0,0,0,0.2)] flex justify-between items-center ">
@@ -93,8 +89,7 @@ const HeaderDesign = ({ session }: propsType) => {
                 {" "}
                 <Button onClick={signOutUser} className={`${side ? "px-6 py-4" : ""} ml-4 hover:bg-amber-100 duration-300 text-sm font-bold rounded-lg`}>
                   Sign Out
-                </Button>
-               {" "}
+                </Button>{" "}
               </>
             ) : (
               <>
@@ -109,17 +104,24 @@ const HeaderDesign = ({ session }: propsType) => {
             )}
           </div>
         </div>
-        <Button onClick={handleToggle} type="button" className="bg-white z-10 hover:bg-amber-100 px-6 py-4 duration-300 text-sm font-bold flex gap-1">
+
+        <Box
+          clasaNameItems="text-xs font-bold flex flex-col items-start "
+          possition="bottom-left"
+          btnClassName="px-4 bg-white "
+          childrenItems={
+            <>
+              <Button className="w-full text-start px-4 py-2 hover:bg-amber-100 duration-200" type="button" onClick={setFarsi}>
+                farsi
+              </Button>
+              <Button className="w-full  text-start px-4 py-2 hover:bg-amber-100 duration-200" type="button" onClick={setEnglish}>
+                english
+              </Button>
+            </>
+          }
+        >
           {nameLg}
           <Image width={20} height={20} alt="flag" src={`/flag/${lg}.svg`} />
-        </Button>
-        <Box onToggle={handleToggle} toggle={toggle} possition="bottom-left" clasName="text-xs  font-bold flex flex-col items-start ">
-          <Button className="w-full text-start px-4 py-2 hover:bg-amber-100 duration-200" type="button" onClick={setFarsi}>
-            farsi
-          </Button>
-          <Button className="w-full  text-start px-4 py-2 hover:bg-amber-100 duration-200" type="button" onClick={setEnglish}>
-            english
-          </Button>
         </Box>
       </div>
     </div>
