@@ -10,6 +10,16 @@ const AxiosRequest = axios.create({
 });
 
 
+export async function getUser() {
+  return AxiosRequest.get("/api/users")
+  .then((res) => {
+    return res.data;
+  })
+  .catch((err) => {
+    return err.message;
+  });
+}
+
 export async function SignUpUser(data: SignUpSchemaType) {
   return AxiosRequest.post("/api/users", JSON.stringify(data))
     .then((res) => {
@@ -18,4 +28,23 @@ export async function SignUpUser(data: SignUpSchemaType) {
     .catch((err) => {
       return err.message;
     });
+}
+
+export async function updateUser(id:string , role:string) {
+  return AxiosRequest.put(`/api/users/${id}`,{role})
+    .then((res)=> {
+      return res.data;
+    })
+    .catch((err)=>{
+      return err.message;
+    })
+}
+export async function deleteUser(id:string ) {
+  return AxiosRequest.delete(`/api/users/${id}`)
+    .then((res)=> {
+      return res.data;
+    })
+    .catch((err)=>{
+      return err.message;
+    })
 }
