@@ -1,14 +1,24 @@
 "use client";
 
 import { MouseEventHandler, useEffect, useState } from "react";
+import Button from "../button/Button";
 
-interface propsType {
+interface togglePropsType {
   children: React.ReactNode;
-  onToggle? : MouseEventHandler,
+  onToggle?: MouseEventHandler;
   toggle?: boolean;
-  clasName?: string;
+  clasaNameItems?: string;
   possition?: string;
-  childClass ? :string
+  childClass?: string;
+}
+
+interface boxPropsType {
+  children?: React.ReactNode;
+  childrenItems?: React.ReactNode;
+  clasaNameItems?: string;
+  possition?: string;
+  childClass?: string;
+  btnClassName?:string
 }
 
 interface boxStyle {
@@ -18,7 +28,7 @@ interface boxStyle {
   top?: string;
 }
 
-const Box = ({ children, clasName, toggle, possition,onToggle,childClass }: propsType) => {
+const Toggle = ({ children, clasaNameItems, toggle, possition, onToggle, childClass }: togglePropsType) => {
   const [styleBox, setStyleBox] = useState<boxStyle>();
 
   useEffect(() => {
@@ -74,11 +84,32 @@ const Box = ({ children, clasName, toggle, possition,onToggle,childClass }: prop
         break;
     }
   }, [possition]);
+  return (
+    <div style={styleBox} className={`${clasaNameItems} ${toggle ? "h-auto" : "h-0"} absolute w-auto overflow-auto  rounded-lg shadow-2xl`}>
+      <div onClick={onToggle} className={`${toggle ? "fixed" : "hidden"}  left-0 right-0 z-0 top-0 bottom-0`}></div>
+      <div className={`${childClass} z-10 bg-white`} onClick={onToggle}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+const Box = ({children,btnClassName,childrenItems , possition , clasaNameItems ,childClass} : boxPropsType) => {
+
+  const [open,setOpen] = useState(false)
+
+  const onToggle = ()=>{
+    setOpen(open ? false : true)
+  }
 
   return (
-    <div style={styleBox} className={`${clasName} ${toggle ? "h-auto" : "h-0"} absolute w-auto overflow-auto  rounded-lg shadow-2xl`}>
-      <div onClick={onToggle} className={`${ toggle ? 'fixed' : 'hidden' }  left-0 right-0 z-0 top-0 bottom-0`}></div>
-      <div className={`${childClass} z-10 bg-white`} onClick={onToggle}>{children}</div>
+    <div className="relative">
+      <Button onClick={onToggle} className={`${btnClassName}`}>
+        {children}
+      </Button>
+      <Toggle toggle={open} onToggle={onToggle} possition={possition} clasaNameItems={clasaNameItems} childClass={childClass}>
+        {childrenItems}
+      </Toggle>
     </div>
   );
 };
