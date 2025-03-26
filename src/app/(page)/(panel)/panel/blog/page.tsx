@@ -1,7 +1,9 @@
+import ManageBlogs from "@/app/components/panel/manage-blogs/manageBlogs";
+
 const BlogPanel = () => {
     return ( 
         <div>
-            blogs
+            <ManageBlogs/>
         </div>
      );
 }
