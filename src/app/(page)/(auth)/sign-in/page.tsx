@@ -23,7 +23,6 @@ const SignIn = () => {
   const router = useRouter();
   const t = useTranslations("loged");
   const onSubmit: SubmitHandler<SignInSchemaType> = async (data) => {
-    console.log(data)
     const newUser = signIn("credentials", {
       redirect: false,
       ...data,

@@ -3,14 +3,16 @@ import Credentials from "next-auth/providers/credentials";
 import  { connectDb } from "./lib/mongoClient";
 import bcrypt from "bcryptjs";
 import { signInSchema } from "./lib/zod";
-import { UserType } from "./models/types";
+import { blogType, UserType } from "./models/types";
 import Google from "next-auth/providers/google";
 import User from "./models/userSchema";
 
 declare module "next-auth" {
   interface User {
     username: string;
-    role: string;
+    role: string | undefined;
+    image?:string | null | undefined,
+    blogs:blogType
   }
 }
 
@@ -40,10 +42,13 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         }
 
         const validUser: UserType = {
+          id:user.id,
           username: user.username,
           password: user.password,
           email: user.email,
           role: user.role,
+          image:user.image,
+          blogs:user.blogs
         };
         return validUser;
       },
@@ -66,9 +71,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
       await User.insertOne({
         id: user.id,
-        role: user.role || "user",
+        role: "user",
         email: user.email,
         username: user.username || user.name,
+        image : user.image,
+        blogs: user.blogs
       });
       
       user.role = 'user'
@@ -79,7 +86,13 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (user) {
         token.email = user.email;
         token.username = user.username || user.name;
-        token.role = user.role;
+        token.role = user.role || 'user';
+        token.image = user.image;
+      }else if (token.email) {
+        await connectDb();
+        const dbUser = await User.findOne({ email: token.email });
+        token.role = dbUser?.role || "user"; 
+        token.blogs = dbUser?.blogs;
       }
       return token;
     },
@@ -87,7 +100,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (token) {
         session.user.username = token.username as string;
         session.user.email = token.email as string;
-        session.user.role = token.role as string;
+        session.user.role = token.role as string || 'user';
+        session.user.image = token.image as string;
+        session.user.blogs = token.blogs as blogType
       }
       return session;
     },

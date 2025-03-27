@@ -23,5 +23,15 @@
     "signIn":"Sign In",
     "signUp":"Sign Up",
     "google":"Google"
+  },
+  "adminDashboard":{
+    "dashboard":"Dashboard",
+    "blog":"Blog",
+    "users":"Users",
+    "products":"Products",
+    "home":"Home",
+    "about":"About",
+    "contact":"Contact Us",
+    "profile":"Profile"
   }
 }

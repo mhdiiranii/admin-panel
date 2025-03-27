@@ -4,7 +4,6 @@ export async function middleware(request : NextRequest) {
     const token = request.cookies.get('authjs.session-token');
     if(!token){
         const url = new URL('/sign-in',request.url);
-        console.log(url)
         return NextResponse.redirect(url);
     }
 
