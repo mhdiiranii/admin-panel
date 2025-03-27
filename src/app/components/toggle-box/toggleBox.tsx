@@ -85,8 +85,8 @@ const Toggle = ({ children, clasaNameItems, toggle, possition, onToggle, childCl
     }
   }, [possition]);
   return (
-    <div style={styleBox} className={`${clasaNameItems} ${toggle ? "h-auto" : "h-0"} absolute w-auto overflow-auto  rounded-lg shadow-2xl`}>
-      <div onClick={onToggle} className={`${toggle ? "fixed" : "hidden"}  left-0 right-0 z-0 top-0 bottom-0`}></div>
+    <div style={styleBox} className={`${clasaNameItems} ${toggle ? "h-auto" : "h-0"} z-10 absolute w-auto overflow-auto  rounded-lg shadow-2xl`}>
+      <div onClick={onToggle} className={`${toggle ? "fixed" : "hidden"}  left-0 right-0 -z-10 top-0 bottom-0`}></div>
       <div className={`${childClass} z-10 bg-white`} onClick={onToggle}>
         {children}
       </div>

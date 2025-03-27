@@ -1,6 +1,6 @@
 export type blogType = [
   {
-    _id?: string;
+    id: string;
     picture: string;
     username: string;
     email: string;

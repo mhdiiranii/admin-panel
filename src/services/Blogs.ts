@@ -14,7 +14,7 @@ export async function getPanelBlogs() {
         .catch((err)=> {return err.message})
 }
 export async function deleteSwitchBlogs(id:string) {
-    return AxiosRequest.delete(`/api/blogs${id}`)
+    return AxiosRequest.delete(`/api/blogs/${id}`)
         .then((res)=> {return res.data})
         .catch((err)=> {return err.message})
 }
